@@ -11,6 +11,7 @@ public class Client {
 
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
 
+        
         while(true){
             System.err.print("Enter msg: ");
             String msg = sc.nextLine();
