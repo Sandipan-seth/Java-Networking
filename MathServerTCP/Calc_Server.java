@@ -1,8 +1,4 @@
-import java.util.*;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.*;
 import java.net.*;
 
 
@@ -13,11 +9,13 @@ public class Calc_Server {
             System.err.println("Server is Connected to server on port " + port);
             Socket client = server.accept();
             System.err.println("Client Connected...");
+
             DataInputStream dis = new DataInputStream(new BufferedInputStream(client.getInputStream()));
+
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
 
             while(true){
                 int choice = dis.readInt();
-                System.err.println(choice);
                 if(choice == 5){
                     System.err.println("Client Disconnected...");
                     break;
@@ -37,15 +35,30 @@ public class Calc_Server {
                         result = num1 - num2;
                         operation = num1 + " - " + num2;
                         break;
-                    default:
+
+                    case 3:
+                        result = num1 * num2;
+                        operation = num1 + " * " + num2;
+                        break;
+
+                    case 4:
+                        if (num2 == 0) {
+                            dos.writeInt(Integer.MIN_VALUE);
+                            dos.writeUTF("Division by zero is not allowed.");
+                            dos.flush();
+                            continue; 
+                        }
+                        result = num1 / num2;
+                        operation = num1 + " / " + num2;
                         break;
                 }
 
+                System.out.println(operation +" = " + result);
+                dos.writeInt(result);
+                dos.writeUTF(operation);
+                dos.flush();
+
             }
-            
-
-
-
 
         }catch(Exception e){
             System.err.println(e);

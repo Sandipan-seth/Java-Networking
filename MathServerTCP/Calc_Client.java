@@ -34,6 +34,11 @@ public class Calc_Client {
                     break;
                 }
 
+                if(choice > 5){
+                    System.err.println("Enter a valid choice..");
+                    continue;
+                }
+
                 System.err.print("Enter 1st number:");
                 int num1 = sc.nextInt();
                 System.err.print("Enter 2nd number:");
@@ -42,9 +47,15 @@ public class Calc_Client {
                 dos.writeInt(num2);
                 dos.flush();
 
-                String res = "";
-                res = dis.readUTF();
-                System.err.println(res);
+                int result = dis.readInt();
+                String operation = dis.readUTF();
+
+                if (result == Integer.MIN_VALUE) {
+                    System.err.println(operation); 
+                } else {
+                    System.err.println("Computed result " + operation + " = " + result);
+                }
+
             }
 
             client.close();
