@@ -1,0 +1,45 @@
+import java.net.*;
+import java.util.Scanner;
+import java.io.*;
+
+public class Server {
+    public static void main(String[] args) throws Exception {
+        final int PORT = 5000;
+        ServerSocket server = new ServerSocket(PORT);
+        System.err.println("Server is waiting in port " + PORT);
+        Socket client = null;
+        client = server.accept();
+        System.err.println("New Client Accepted.....");
+
+
+        Scanner sc = new Scanner(System.in);
+
+        DataInputStream dis = new DataInputStream(new BufferedInputStream(client.getInputStream()));
+
+        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
+
+        while (true) {
+            String msg = "";
+            msg = dis.readUTF();
+            System.err.println("Client: " + msg);
+            if (msg.equalsIgnoreCase("over") || msg.equals("")) {
+                System.err.println("Client Disconnected");
+                break;
+            }
+
+            String reply ="";
+            System.err.print("Enter msg: ");
+            reply = sc.nextLine();
+
+            dos.writeUTF(reply);
+            dos.flush();
+            
+        }
+
+        client.close();
+        sc.close();
+        dis.close();
+        server.close();
+
+    }
+}
