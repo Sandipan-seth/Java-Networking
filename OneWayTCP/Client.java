@@ -10,7 +10,6 @@ public class Client {
         Scanner sc = new Scanner(System.in);
 
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
-
         
         while(true){
             System.err.print("Enter msg: ");
