@@ -12,6 +12,7 @@ public class Calc_Client {
         
         try(Socket client = new Socket("localhost",port)){
             System.err.println("Client is Connected to server on port "+port);
+            
             DataInputStream dis = new DataInputStream(new BufferedInputStream(client.getInputStream()));
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(client.getOutputStream()));
             Scanner sc = new Scanner(System.in);
