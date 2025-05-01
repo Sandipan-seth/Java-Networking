@@ -15,7 +15,6 @@ public class Client {
 
             Scanner sc = new Scanner(System.in);
 
-
             while(true){
                 System.err.print("Enter msg: ");
                 String msg = sc.nextLine();
